@@ -68,7 +68,7 @@ select 	employee_id as '사 번',
 from employees;
 
 -- *산술 연산자 사용하기*
--- 정수/정수 소수점까지 계산됨
+-- *정수/정수 소수점까지 계산됨
 select 	first_name,
 		salary 월급,
         salary-100 as '월급-식대',
@@ -79,7 +79,7 @@ select 	first_name,
         employee_id/3 정수나누기
 from employees;
 
--- 연산시 문자열은 0으로 처리 --> 오류가 나지 않으므로 주의
+-- *연산시 문자열은 0으로 처리 --> 오류가 나지 않으므로 주의
 select 	job_id*12
 from employees;
 
@@ -91,10 +91,34 @@ select 	first_name, last_name,
 from employees;
 
 -- 전체직원의 정보를 다음과 같이 출력하세요
+select	concat(first_name,'-',last_name) as 성명,
+		salary as 월급,
+        salary*12 as 연봉,
+        salary*12+5000 as 보너스,
+        phone_number as 전화번호
+from employees;
 
+-- *테이블의 컬럼명테이블의 데이터,  문자열,숫자는 그대로 출력 
+select 	first_name,
+		salary,
+        '(주)개발자' as company,
+        3+5 as no
+from employees;
 
+-- MySQL은 테이블명을 생략할 수 있다. (오라클은 안됨)
+select 	'(주)개발자' as company
+from employees;     -- employees 테이블의 데이타가 107개
 
+select '(주)개발자'
+from dual;           -- 데이터가 없는 가상의 테이블
 
+select now()
+from regions;        -- 데이터의 갯수만큼 출력
+
+select now() as 현재시간
+from dual;           -- 가상의 테이블 사용
+
+select now() as 현재시간;     -- from절을 생략할 수 있음(오라클에서는 생략안됨)
 
 
 
