@@ -176,3 +176,122 @@ from employees;
         concat('|', '        안녕하세요        ', '|'),
         trim(concat('|', '        안녕하세요        ', '|'))
  from dual;
+ 
+ -- replace[(str, from_str, to_str): str에서 from_str을 to_str로 변경
+ select	first_name,
+		replace(first_name, 'a', '*')
+ from employees;
+ 
+ select	first_name,
+		substr(first_name, 2, 3),
+        replace(first_name, substr(first_name, 2, 3), '***' )  -- 이벤트당첨자
+ from employees;
+ 
+
+/* 
+Steven     tev    ??? Steven  tev ***   -->St***en
+Neena      een    ??? Neena   een ***   -->N***a
+Lex        ex     ??? ex      ex  ***   -->L**
+S***en
+N***a
+L***
+A***ander
+B***e
+D***d
+V***i
+*/
+
+-- *단일행함수 > 날짜함수
+-- 날짜
+select current_date() from dual;
+select curdate() from dual;
+
+-- 시간
+select current_time() from dual;
+select curtime() from dual;
+
+-- 날짜+시간
+select current_timestamp() from dual;
+select now() from dual;
+
+-- *날짜,시간 더하기 빼기
+select	'2021-06-20 00:00:00',
+		adddate('2021-06-20 00:00:00', interval 1 year),	-- +1년     
+        adddate('2021-06-20 00:00:00', interval 1 month),   -- +1달
+        adddate('2021-06-20 00:00:00', interval 1 week),   	-- +1주
+        adddate('2021-06-20 00:00:00', interval 1 day),   	-- +1일
+        adddate('2021-06-20 00:00:00', interval 1 hour),   	-- +1시간
+        adddate('2021-06-20 00:00:00', interval 1 minute), 	-- +1분
+        adddate('2021-06-20 00:00:00', interval 1 second) 	-- +1초
+from dual;
+
+select	'2021-06-20 00:00:00',
+		subdate('2021-06-20 00:00:00', interval 1 year),	-- -1년     
+        subdate('2021-06-20 00:00:00', interval 1 month),   -- -1달
+        subdate('2021-06-20 00:00:00', interval 1 week),   	-- -1주
+        subdate('2021-06-20 00:00:00', interval 1 day),   	-- -1일
+        subdate('2021-06-20 00:00:00', interval 1 hour),   	-- -1시간
+        subdate('2021-06-20 00:00:00', interval 1 minute), 	-- -1분
+        subdate('2021-06-20 00:00:00', interval 1 second) 	-- -1초
+from dual;
+
+-- *datediff(): 두 날짜간 일수차,  timediff(): 두 날짜시간 간 시간차
+select	datediff('2021-06-21 01:05:05','2021-06-20 01:00:00' ), -- 일
+		timediff('2021-06-21 01:05:05','2021-06-20 01:00:00')   -- 초
+from dual;
+
+select	datediff('2025-09-05','2025-03-27' )    
+from dual; -- 수업기간 몇일
+
+select	first_name,
+		datediff(now(), hire_date)/365,
+		concat(ceil(datediff(now(), hire_date)/365), '년차') 
+from employees;
+
+-- -------------------------------------------
+-- *단일행함수 > 변환함수
+-- 날짜-->문자열
+select	now(),
+		date_format(now(), '%y-%m-%d %h:%i:%s'),
+		date_format(now(), '%Y-%m-%d %h:%i:%s (%p)'),
+        date_format(now(), '%Y-%m-%d %H:%i:%s'),
+        date_format(now(), '%Y/%m/%d %H %i %s')
+from dual;
+
+select	first_name,
+		date_format(hire_date, '%d.%m.%Y %H:%i:%s') as hire_date
+from employees;
+
+
+-- -------------------------------------------
+
+-- 원래 문자열 --> 날짜형(자동으로 변환)
+select datediff('2021-Jun-22', '2021-06-21')  
+from dual;
+
+-- 문자열 -->날짜형으로 변환 --> 계산
+select  str_to_date('2021-Jun-22', '%Y-%b-%d' ),
+		str_to_date('2021-06-21', '%Y-%m-%d'),
+        datediff(str_to_date('2021-Jun-22', '%Y-%b-%d' ), str_to_date('2021-06-21', '%Y-%m-%d') )
+from dual;
+
+-- 숫자-->문자열
+-- *format(숫자, p): 숫자에 콤마(,) 를 추가, 소수점 p자리까지 출력
+select	format(1234567, 0),
+		format(1234567.89128, 4),  -- 소수점자리수 반올림
+		format(1234567.89128, -5)  -- 소수점자리수(-는 안됨) 반올림
+from dual;
+
+-- IFNULL(컬럼명, null일때값): 컬럼의 값이 null일때 정해진값을 출력
+select	first_name,
+		commission_pct,
+		ifnull(commission_pct, '없음')
+from employees;
+
+select 	first_name
+		manager_id,
+        ifnull(manager_id, '매니저없음')
+from employees;
+
+
+
