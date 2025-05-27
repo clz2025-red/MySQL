@@ -177,15 +177,34 @@ from employees
 --                      그외에는 월급으로              
 -- 계산하세요
 
-select 	job_id,
-        salary,
-        *복잡한 if else문으로 표시  -->실제월급*
+select 	job_id as 업무아이디,
+        salary as 월급,
+        case when job_id = 'AC_ACCOUNT' then salary+salary*0.1
+			 when job_id = 'SA_REP' then salary+salary*0.2
+             when job_id = 'ST_CLERK' then salary+salary*0.3
+             else salary
+        end as 실제월급
 from employees
 ;
 
-select *
+-- 직원의 이름, 부서아이디, 팀을 출력하세요
+-- 팀은 코드로 결정하며 부서코드가
+--    10~50 이면 'A-TEAM'
+--    60~100이면 'B-TEAM'
+--    110~150이면 'C-TEAM'
+--    나머지는 '팀없음' 으로 
+-- 출력하세요.
+select	first_name,
+		department_id,
+        case  when department_id >=10 and department_id <=50 then 'A-TEAM'
+			  when department_id >=60 and department_id <=100 then 'B-TEAM'
+              when department_id >=110 and department_id <=150 then 'C-TEAM'
+              else '팀없음'
+        end Team
 from employees
 ;
+
+
 
 
 
