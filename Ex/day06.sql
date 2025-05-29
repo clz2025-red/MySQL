@@ -263,7 +263,10 @@ or department_id =30 and salary = 11000
 ;
 
 -- 2-2)   in (),  >any (),  >all () 
-select *
+select 	department_id,
+		employee_id,
+        first_name,
+        salary
 from employees
 where (department_id, salary) in ( (10,4400) , (20,13000) , (30,11000))
 ;
@@ -288,24 +291,19 @@ where 컬럼명 in (서브커리 결과)
 */
 -- ---------------------------------------------------------------
 
--- #from절의 테이블로 해결
-/*
--- 테이블2를 조인한다
-select *
-from 테이블명, 테이블2(서브퀄결과)
-where 컬럼명 = 컬럼명
-*/
+-- ---------------------------------------------------------------
 
 -- 각 부서별로 최고월급을 받는 사원의 부서번호, 직원번호, 이름, 월급을 출력하세요
--- 1) 각 부서별 최고월급
+-- #테이블로 해결
+
+-- 1) 각 부서별 최고월급 데이터가 있는 테이블이 있다면 구할 수 있다
+--    --> 이부분은 아디디어가 필요함(어려울 수있으므로 지금 생각이 안난다면 넘어가자)
+--    --> 단 테이블 조인으로 해결할 수 있다 는 믿고가자
 select  department_id,
-		max(salary)
+		max(salary) maxSalary   -- 별명을 왜 주었는지 생각해 볼것
 from employees
 group by department_id
 ;
-
-select *
-from locations;
 /*결과 일부
 (10, 4400)
 (20, 13000)
@@ -313,62 +311,31 @@ from locations;
 */
 
 -- 2) 전체구조
-select *
+select employee_id,
+	   department_id,
+	   first_name,
+	   salary
 from employees e,  가상의테이블 s
 where e.department_id = s.department_id
 and e.salary = s.salary
 ;
 
-
-select *
-from employees e 
-where e.department_id = 20
-and e.salary = 6000
-;
-
--- 각 부서별로 최고급여를 받는 사원을 출력하세요 
-select  department_id,
-		max(salary)
-from employees
-group by department_id
-;
-
-select 	employee_id,
-		department_id,
-		first_name,
-		salary
-from employees e
-where (e.department_id = 10 and salary = 4400)
-or (e.department_id = 20 and salary = 13000)
-or (e.department_id = 30 and salary = 11000)
-;
-
-
-select 	employee_id,
-		department_id,
-		first_name,
-		salary
-from employees e
-where (department_id, salary) in (select  department_id,
-										  max(salary)
-								  from employees
-								  group by department_id)
-;
-
-
--- -------------------------------------------------------
-
-select  department_id,
-		max(salary)
-from employees
-group by department_id
-;
-
-
-select *
-from employees e, salary s 
+-- 3) 합치기      -- 1)번의 결롸를 테이블로 사용
+select 	e.department_id,
+		e.employee_id,
+        e.first_name,
+		e.salary,
+        s.maxSalary
+from employees e, (select  department_id,
+						   max(salary) maxSalary
+				   from employees
+				   group by department_id) s 
 where e.department_id = s.department_id
-and e.salary = s.salary
+and e.salary = s.maxSalary
+;
+
+
+
 
 
 
