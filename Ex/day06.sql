@@ -449,8 +449,73 @@ order by salary desc
 limit 2, 5
 ;
 
+-- ------------------
+-- * 2007년을 구하는 여러가지 방법
+select	first_name,
+		hire_date
+from employees
+where hire_date >= '2007-01-01'
+and hire_date < '2008-01-01'
+order by hire_date asc
+;
 
+select	first_name,
+		hire_date
+from employees
+where hire_date between '2007-01-01' and '2007-12-31'
+order by hire_date asc
+;
 
+select	first_name,
+		hire_date,
+        date_format(hire_date, '%y') 
+from employees
+where date_format(hire_date, '%y') = '07'
+order by hire_date asc
+;
+
+select	first_name,
+		hire_date,
+        date_format(hire_date, '%Y') 
+from employees
+where date_format(hire_date, '%Y') = '2007'
+order by hire_date asc
+;
+
+-- ------------------
+-- 부서번호가 100인 직원중 월급을 가장 많이 받은 직원의 이름, 월급, 부서번호를 출력하세요
+
+-- 1)부서번호가 100인 직원
+select *
+from employees
+where department_id = 100
+;
+
+-- 2)부서번호100에서 가장 큰 월급
+select 	max(salary)
+	--  first_name   안됨(107개)
+from employees
+where department_id = 100
+;
+
+-- 3) 월급 12008 직원을 찾는다,  부서번호 100이어야한다 
+select *
+from employees
+where salary = 12008   -- 12008을 서브쿼리도 변경
+and department_id = 100
+;
+
+-- 4) 서브쿼리 적용
+select	first_name,
+		salary,
+        department_id
+from employees
+where salary = (select 	max(salary)
+				from employees
+				where department_id = 100)   
+and department_id = 100
+;
+-- -------------------------------------------------
 
 
 
