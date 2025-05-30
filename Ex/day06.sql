@@ -408,10 +408,46 @@ limit 5 offset 10      -- 11번째부터 5개
 
 
 -- 07년에 입사한 직원중 급여가 많은 직원중 3에서 7등의 이름 급여 입사일은? 
+-- 1)전체확인
+select *
+from employees
+;
+
+-- 2)20007년 입사자만 조회
+select *
+from employees
+where hire_date >= '2007-01-01'
+and hire_date < '2008-01-01'
+;
+
+-- 3)월급이 큰 사람부터 내림차순 정렬
+select *
+from employees
+where hire_date >= '2007-01-01'
+and hire_date < '2008-01-01'
+order by salary desc
+;
+
+-- 4) 3번째 부터 5명 출력
+select *
+from employees
+where hire_date >= '2007-01-01'
+and hire_date < '2008-01-01'
+order by salary desc
+limit 2, 5
+;
 
 
-
-
+-- 5) 출력컬럼 결정
+select 	first_name,
+		hire_date,
+        salary
+from employees
+where hire_date >= '2007-01-01'
+and hire_date < '2008-01-01'
+order by salary desc
+limit 2, 5
+;
 
 
 
