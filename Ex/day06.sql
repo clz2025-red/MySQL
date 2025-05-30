@@ -516,6 +516,18 @@ where salary = (select 	max(salary)
 and department_id = 100
 ;
 -- -------------------------------------------------
+-- limit 사용
+select first_name,
+	   salary,
+       department_id
+from employees
+where department_id = 100
+order by salary desc
+limit 0, 1
+;
+
+
+
 
 
 
