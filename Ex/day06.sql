@@ -335,6 +335,82 @@ and e.salary = s.maxSalary
 ;
 
 
+-- ------------------------------------------------
+# limit
+-- ------------------------------------------------
+-- 직원관리 페이지,   
+-- 사번이 작은 직원이 위쪽에 출력(요구사항에 있었음)
+-- -->자동으로 정렬(믿으면안됨)되더라도 꼭 order by 절로 정렬해줘야함
+-- *1페이지의 데이터만 가져오기(1페이지에 5개)
+/*
+(0, 5)  --> 1번부터 5개 
+(5, 10)  --> 6번부터 5개  
+(10, 10)  --> 11번부터 5개  
+*/ 
+ 
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 0, 5      -- 첫번째부터 5개
+;
+
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 5, 5      -- 6번째부터 5개
+;
+
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 10, 5      -- 10번째부터 5개
+;
+-- ------------------
+-- * 0 생략
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 7      -- 처음부터 7개
+;
+-- ------------------
+-- *다른표현
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 5 offset 0      -- 첫번째부터 5개
+;
+
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 5 offset 5      -- 6번째부터 5개
+;
+
+select 	employee_id,
+		first_name,
+        salary
+from employees
+order by employee_id asc
+limit 5 offset 10      -- 11번째부터 5개
+;
+
+
+-- 07년에 입사한 직원중 급여가 많은 직원중 3에서 7등의 이름 급여 입사일은? 
+
+
+
 
 
 
