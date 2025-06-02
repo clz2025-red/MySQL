@@ -173,3 +173,6 @@ select CASE dayofweek(min(hire_date))
 		  WHEN '7' THEN '(토요일)'
 	   END
 from employees;
+
+
+
