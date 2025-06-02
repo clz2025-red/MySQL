@@ -231,3 +231,25 @@ where e.salary = l.location_id
    
 -- 직원아이디, 이름, 월급, 부서아이디, 부서명, 도시아이디, 도시명, 나라아이디, 나라명, 지역아이디, 지역명
 
+salary in (1000, 2000)
+
+where salary = 1000
+or salary = 2000
+
+------|-------|-------  
+     1000    2000
+
+
+salsry >any () -->  or
+where salary > 1000
+or salary > 2000
+
+
+salsry >all () -->  and
+where salary > 1000
+and salary > 2000
+
+------|-------|-------  
+     1000    2000
+
+
